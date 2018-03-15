@@ -4,3 +4,6 @@
 [submodule "libraries/Nefry_ThingSpeak/src/include"]
 	path = libraries/Nefry_ThingSpeak/src/include
 url=https://github.com/wamisnet/thingspeak-arduino.git
+[submodule "libraries/TutorialBookExample"]
+	path = libraries/TutorialBookExample
+	url = git@github.com:Nefry-Community/TutorialExample.git
