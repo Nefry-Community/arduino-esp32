@@ -49,8 +49,8 @@ static const uint8_t T3 = 32;
 static const uint8_t DAC1 = 25;
 static const uint8_t DAC2 = 26;
 
-static const uint8_t LED_CLK = 35;
-static const uint8_t LED_DO  = 34;
+static const uint8_t LED_CLK = 27;
+static const uint8_t LED_DO  = 12;
 
 static const uint8_t  boardId = 3;//Nefry BT R3
 
