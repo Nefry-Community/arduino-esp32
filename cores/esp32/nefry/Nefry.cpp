@@ -368,7 +368,10 @@ String Nefry_lib::getDefaultModuleId() {
 	String _devstr,ms;
 	switch (boardId)
 	{
-	case 0:case 1:
+	case 0:
+	case 1:
+	case 2:
+	case 3:
 		moduleName = "NefryBT";
 		break;
 	}
