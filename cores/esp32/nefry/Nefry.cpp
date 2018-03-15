@@ -498,8 +498,12 @@ bool Nefry_lib::setAnalyticsData(String action) {
 		url += getVersion();
 		url += "&ea=";
 		url += action;
+		url += "&ds=";
 	
-
+		String _devstr; 
+		_devstr = WiFi.macAddress();
+		_devstr.replace(":", "");
+		url += (String)"NefryBT-" + _devstr.substring(8);
 		//Serial.print("Requesting URL: ");
 		//Serial.println(url);
 
