@@ -3,7 +3,7 @@
 	url = https://github.com/wamisnet/ConfigurableFirmata.git
 [submodule "libraries/Nefry_ThingSpeak/src/include"]
 	path = libraries/Nefry_ThingSpeak/src/include
-url=https://github.com/wamisnet/thingspeak-arduino.git
+	url=https://github.com/wamisnet/thingspeak-arduino.git
 [submodule "libraries/TutorialBookExample"]
 	path = libraries/TutorialBookExample
-	url = git@github.com:Nefry-Community/TutorialExample.git
+	url = https://github.com/Nefry-Community/TutorialExample.git
