@@ -29,8 +29,8 @@ static const uint8_t SCK   = 18;
 static const uint8_t D0 = 22;
 static const uint8_t D1 = 21;
 static const uint8_t D2 = 23;
-static const uint8_t D3 = 19;
-static const uint8_t D4 = 18;
+static const uint8_t D3 = 18;
+static const uint8_t D4 = 19;
 static const uint8_t D5 = 25;
 static const uint8_t D6 = 26;
 static const uint8_t D7 = 13;
@@ -45,14 +45,13 @@ static const uint8_t T0 = 13;
 static const uint8_t T1 = 14;
 static const uint8_t T2 = 33;
 static const uint8_t T3 = 32;
-static const uint8_t T4 = 27;
 
 static const uint8_t DAC1 = 25;
 static const uint8_t DAC2 = 26;
 
-static const uint8_t LED_CLK = -1;
-static const uint8_t LED_DO = 16;
+static const uint8_t LED_CLK = 27;
+static const uint8_t LED_DO  = 12;
 
-static const uint8_t  boardId = 2;//Nefry BT R2
+static const uint8_t  boardId = 3;//Nefry BT R3
 
 #endif /* Pins_Arduino_h */

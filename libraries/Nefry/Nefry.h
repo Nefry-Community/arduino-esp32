@@ -46,7 +46,7 @@ public:
 		reset(),
 		sleep(const int sec),
 		setProgramName(const char * pn),
-		beginLed(const int num, const int pin, uint8_t t),
+		beginLed(const int num, const int dataOut, uint8_t t = 0, const int clk = -1),
 		setLed(const int r, const int g, const int b, const char w = 122, const int pin = 16, const int num = 0),
 		setLed(String _colorStr, const char w = 122, const int pin = 16, const int num = 0),
 		addWiFi(String ssid, String pass),

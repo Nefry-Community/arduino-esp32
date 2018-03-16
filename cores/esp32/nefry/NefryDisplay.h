@@ -110,6 +110,8 @@ public:
 
 	void autoScrollTask ();
 
+	void setTitle(String title);
+
 private:
 	GeneralFunction _func = NULL;
 	uint16_t _scrollTextCount = 0;
