@@ -300,7 +300,7 @@ bool Nefry_lib::getPollingSW()
 //LED
 void Nefry_lib::beginLed(const int num, const int DataOut, uint8_t t ,const int clk) {
 	if (boardId == 3) { // Nefry BT r3
-		_NefryLEDStar = Adafruit_DotStar(num, DataOut, clk, DOTSTAR_BRG);
+		_NefryLEDStar = Adafruit_DotStar(num, DataOut, clk, DOTSTAR_BGR);
 		_NefryLEDStar.begin();
 		_NefryLEDStar.show();
 	}
