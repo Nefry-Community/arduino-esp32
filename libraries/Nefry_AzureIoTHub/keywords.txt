@@ -9,6 +9,7 @@
 NefryAzureIoTHub	KEYWORD1
 AzureIoTHub	KEYWORD1
 DataElement	KEYWORD1
+Azure		KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
