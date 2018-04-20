@@ -36,11 +36,7 @@ void Nefry_lib::nefry_init() {
 	connectAnFlg = false;
 	delay(10);
 	NefryDisplay.begin();//logo表示
-	if (boardId == 3) {
-		beginLed((const int)1, (const int)LED_DO, (uint8_t)DOTSTAR_BRG, LED_CLK);
-	} else {
-		beginLed((const int)1, (const int)16, (uint8_t)NEO_GRBW);
-	}
+	beginLed((const int)1, (const int)16, (uint8_t)NEO_GRBW);
 	setLedBlink(0, 0, 0, false, 0);
 	setLed(0x00, 0x0f, 0x00);
 	enableSW();
