@@ -83,6 +83,7 @@ void Nefry_lib::nefry_init() {
 	if(Nefry.getWifiEnabled()){
 		printDeviceInfo();
 	}
+	MDNS.begin("nefrybt");
 	setLed(0x00, 0xff, 0xff);
 	_nefryWifiWait = 0;
 }

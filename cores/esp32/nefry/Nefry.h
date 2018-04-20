@@ -12,6 +12,7 @@
 #include "NefryWeb.h"
 #include "NefryWebServer.h"
 #include "./inc/WiFi/src/WiFiClient.h"
+#include "./inc/ESPmDNS/src/ESPmDNS.h"
 
 
 // Offset:         W          R          G          B
