@@ -2,7 +2,6 @@
 #define Nefry_h
 
 #include <Esp.h>
-#include "./inc/led/Adafruit_DotStar.h"
 #include "./inc/led/Adafruit_NeoPixel.h"
 #include "./inc/Preferences/src/Preferences.h"
 #include "NefryWiFi.h"

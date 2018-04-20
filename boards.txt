@@ -6,59 +6,7 @@ menu.DebugLevel=Core Debug Level
 
 ##############################################################
 
-nefrybtr3.name=Nefry BT R3
-
-nefrybtr3.upload.tool=esptool
-nefrybtr3.upload.maximum_size=1703936
-nefrybtr3.upload.maximum_data_size=294912
-nefrybtr3.upload.wait_for_upload_port=true
-
-nefrybtr3.serial.disableDTR=true
-nefrybtr3.serial.disableRTS=true
-
-nefrybtr3.build.mcu=esp32
-nefrybtr3.build.core=esp32
-nefrybtr3.build.variant=nefrybt-r3
-nefrybtr3.build.board=Nefry_BT_R3
-nefrybtr3.build.partitions=default
-
-nefrybtr3.build.f_cpu=240000000L
-nefrybtr3.build.flash_mode=dio
-nefrybtr3.build.flash_size=4MB
-nefrybtr3.build.boot=bootloader
-nefrybtr3.build.flash_freq=80m
-
-nefrybtr3.menu.UploadSpeed.921600=921600
-nefrybtr3.menu.UploadSpeed.921600.upload.speed=921600
-nefrybtr3.menu.UploadSpeed.115200=115200
-nefrybtr3.menu.UploadSpeed.115200.upload.speed=115200
-nefrybtr3.menu.UploadSpeed.256000.windows=256000
-nefrybtr3.menu.UploadSpeed.256000.upload.speed=256000
-nefrybtr3.menu.UploadSpeed.230400.windows.upload.speed=256000
-nefrybtr3.menu.UploadSpeed.230400=230400
-nefrybtr3.menu.UploadSpeed.230400.upload.speed=230400
-nefrybtr3.menu.UploadSpeed.460800.linux=460800
-nefrybtr3.menu.UploadSpeed.460800.macosx=460800
-nefrybtr3.menu.UploadSpeed.460800.upload.speed=460800
-nefrybtr3.menu.UploadSpeed.512000.windows=512000
-nefrybtr3.menu.UploadSpeed.512000.upload.speed=512000
-
-nefrybtr3.menu.DebugLevel.none=None
-nefrybtr3.menu.DebugLevel.none.build.code_debug=0
-nefrybtr3.menu.DebugLevel.error=Error
-nefrybtr3.menu.DebugLevel.error.build.code_debug=1
-nefrybtr3.menu.DebugLevel.warn=Warn
-nefrybtr3.menu.DebugLevel.warn.build.code_debug=2
-nefrybtr3.menu.DebugLevel.info=Info
-nefrybtr3.menu.DebugLevel.info.build.code_debug=3
-nefrybtr3.menu.DebugLevel.debug=Debug
-nefrybtr3.menu.DebugLevel.debug.build.code_debug=4
-nefrybtr3.menu.DebugLevel.verbose=Verbose
-nefrybtr3.menu.DebugLevel.verbose.build.code_debug=5
-
-##############################################################
-
-nefrybtr2.name=Nefry BT R2
+nefrybtr2.name=Nefry BT R2 / R3
 
 nefrybtr2.upload.tool=esptool
 nefrybtr2.upload.maximum_size=1703936
