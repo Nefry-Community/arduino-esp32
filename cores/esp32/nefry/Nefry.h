@@ -54,7 +54,7 @@ public:
 		/* Console */
 		read(),
 		
-		getlistWifi(),
+		getWiFiList(),
 		createHtml(String title, String head, String body);
 
 	long

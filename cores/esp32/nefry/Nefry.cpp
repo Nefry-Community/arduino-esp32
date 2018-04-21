@@ -404,7 +404,7 @@ void Nefry_lib::setIndexLink(const char title[32], const char url[32]){
 ESP32WebServer* Nefry_lib::getWebServer(){
 	return NefryWebServer.getWebServer();
 }
-String Nefry_lib::getlistWifi(){
+String Nefry_lib::getWiFiList(){
 	return NefryWiFi.getlistWifi();
 }
 
