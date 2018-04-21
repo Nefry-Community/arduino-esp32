@@ -53,6 +53,6 @@ static const uint8_t DAC2 = 26;
 static const uint8_t LED_CLK = -1;
 static const uint8_t LED_DO = 16;
 
-static const uint8_t  boardId = 2;//Nefry BT R2
+static const uint8_t  boardId = 2;//Nefry BT R2/R3
 
 #endif /* Pins_Arduino_h */

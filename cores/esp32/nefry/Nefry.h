@@ -2,7 +2,6 @@
 #define Nefry_h
 
 #include <Esp.h>
-#include "./inc/led/Adafruit_DotStar.h"
 #include "./inc/led/Adafruit_NeoPixel.h"
 #include "./inc/Preferences/src/Preferences.h"
 #include "NefryWiFi.h"
@@ -13,6 +12,7 @@
 #include "NefryWeb.h"
 #include "NefryWebServer.h"
 #include "./inc/WiFi/src/WiFiClient.h"
+#include "./inc/ESPmDNS/src/ESPmDNS.h"
 
 
 // Offset:         W          R          G          B
@@ -54,7 +54,7 @@ public:
 		/* Console */
 		read(),
 		
-		getlistWifi(),
+		getWiFiList(),
 		createHtml(String title, String head, String body);
 
 	long

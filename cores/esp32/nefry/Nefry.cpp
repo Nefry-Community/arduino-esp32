@@ -24,11 +24,10 @@ BootMode
 1 : WriteMode切替をする
 */
 
-#define LIBVERSION ("1.2.1")
+#define LIBVERSION ("1.2.2")
 #include "Nefry.h"
 
 Adafruit_NeoPixel _NefryLEDNeo;
-Adafruit_DotStar _NefryLEDStar;
 bool connectAnFlg = false;
 //main 
 
@@ -37,11 +36,7 @@ void Nefry_lib::nefry_init() {
 	connectAnFlg = false;
 	delay(10);
 	NefryDisplay.begin();//logo表示
-	if (boardId == 3) {
-		beginLed((const int)1, (const int)LED_DO, (uint8_t)DOTSTAR_BRG, LED_CLK);
-	} else {
-		beginLed((const int)1, (const int)16, (uint8_t)NEO_GRBW);
-	}
+	beginLed((const int)1, (const int)16, (uint8_t)NEO_GRBW);
 	setLedBlink(0, 0, 0, false, 0);
 	setLed(0x00, 0x0f, 0x00);
 	enableSW();
@@ -88,6 +83,7 @@ void Nefry_lib::nefry_init() {
 	if(Nefry.getWifiEnabled()){
 		printDeviceInfo();
 	}
+	MDNS.begin("nefrybt");
 	setLed(0x00, 0xff, 0xff);
 	_nefryWifiWait = 0;
 }
@@ -298,35 +294,22 @@ bool Nefry_lib::getPollingSW()
 }
 
 //LED
-void Nefry_lib::beginLed(const int num, const int DataOut, uint8_t t ,const int clk) {
-	if (boardId == 3) { // Nefry BT r3
-		_NefryLEDStar = Adafruit_DotStar(num, DataOut, clk, DOTSTAR_BRG);
-		_NefryLEDStar.begin();
-		_NefryLEDStar.show();
-	}
-	else {
-		_NefryLEDNeo = Adafruit_NeoPixel(num, DataOut, t);
-		_NefryLEDNeo.begin();
-		_NefryLEDNeo.show();
-	}
+void Nefry_lib::beginLed(const int num, const int DataOut, uint8_t t, const int clk) {
+	_NefryLEDNeo = Adafruit_NeoPixel(num, DataOut, t);
+	_NefryLEDNeo.begin();
+	_NefryLEDNeo.show();
 }
 
 void Nefry_lib::setLed(const int r, const int g, const int b, const char w, const int pin, const int num) {
-	if (boardId == 3) { // Nefry BT r3
-		_NefryLEDStar.setBrightness(w);
-		_NefryLEDStar.setPixelColor(num, r, g, b);
-		_NefryLEDStar.show();
-	}
-	else {
-		_NefryLEDNeo.setPixelColor(num, 0, 0, 0);
-		delay(1);
-		_NefryLEDNeo.show();
-		_NefryLEDNeo.setBrightness(w);
-		_NefryLEDNeo.setPixelColor(num, map(r, 0, 255, 0, 150), g, b);
-		delay(1);
-		_NefryLEDNeo.show();
-	}
+	_NefryLEDNeo.setPixelColor(num, 0, 0, 0);
+	delay(1);
+	_NefryLEDNeo.show();
+	_NefryLEDNeo.setBrightness(w);
+	_NefryLEDNeo.setPixelColor(num, map(r, 0, 255, 0, 150), g, b);
+	delay(1);
+	_NefryLEDNeo.show();
 }
+
 void Nefry_lib::setLed(String _colorStr, const char w, const int pin, const int num) {
 	int _color[3];
 	for (int i = 0; i < 3; i++) {
@@ -421,7 +404,7 @@ void Nefry_lib::setIndexLink(const char title[32], const char url[32]){
 ESP32WebServer* Nefry_lib::getWebServer(){
 	return NefryWebServer.getWebServer();
 }
-String Nefry_lib::getlistWifi(){
+String Nefry_lib::getWiFiList(){
 	return NefryWiFi.getlistWifi();
 }
 
@@ -485,10 +468,7 @@ bool Nefry_lib::setAnalyticsData(String action) {
 				url += "r1";
 				break;
 			case 2:
-				url += "r2";
-				break;
-			case 3:
-				url += "r3";
+				url += "r2/r3";
 				break;
 			default:
 				url += "error";
