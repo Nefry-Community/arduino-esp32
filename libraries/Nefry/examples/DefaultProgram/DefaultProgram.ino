@@ -29,8 +29,7 @@ void loop() {
     if (!LineAuth.equals("")) {
       if (SendMessageLINE.equals(""))
         SendMessageLINE = "Welcome to the NefryBT world!";
-      LineNotify.send(L
-                      FeineAuth, SendMessageLINE);       //LINE送信
+      LineNotify.send(LineAuth, SendMessageLINE);       //LINE送信
     }
     delay(1000);               //送信後1秒間待つ
   }
