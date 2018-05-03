@@ -41,8 +41,7 @@ bool WiFiMulti::addAP(const char* ssid, const char *passphrase)
 {
     return APlistAdd(ssid, passphrase);
 }
-
-uint8_t WiFiMulti::run(int mode)
+uint8_t WiFiMulti::run(int mode, uint32_t connectTimeout)
 {
 
     int8_t scanResult;
@@ -136,15 +135,14 @@ uint8_t WiFiMulti::run(int mode)
 
                 WiFi.begin(bestNetwork.ssid, bestNetwork.passphrase, bestChannel, bestBSSID);
                 status = WiFi.status();
-				int wifiTimout = 0;
-                // wait for connection or fail
-                while(status != WL_CONNECTED && status != WL_NO_SSID_AVAIL && status != WL_CONNECT_FAILED) {
-                    delay(50);
+                
+                auto startTime = millis();
+                // wait for connection, fail, or timeout
+                while(status != WL_CONNECTED && status != WL_NO_SSID_AVAIL && status != WL_CONNECT_FAILED && (millis() - startTime) <= connectTimeout) {
+                    delay(10);
                     status = WiFi.status();
-					wifiTimout++;
-					if (wifiTimout > 50)break;
 					if (mode == 0) {
-						//NefryDisplay.drawProgressBar(14, 44, 100, 14, 50+ wifiTimout);
+						//NefryDisplay.drawProgressBar(14, 44, 100, 14, 50 + (connectTimeout/(millis() - startTime))*100/2);
 						//NefryDisplay.display();
 					}
                 }
@@ -153,19 +151,17 @@ uint8_t WiFiMulti::run(int mode)
 					//NefryDisplay.display();
 				}
                 IPAddress ip;
-                
+                uint8_t * mac;
                 switch(status) {
-				case 3: {
-					uint8_t * mac;
-					ip = WiFi.localIP();
-					mac = WiFi.BSSID();
-					DEBUG_WIFI_MULTI("[WIFI] Connecting done.\n");
-					DEBUG_WIFI_MULTI("[WIFI] SSID: %s\n", WiFi.SSID());
-					DEBUG_WIFI_MULTI("[WIFI] IP: %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
-					DEBUG_WIFI_MULTI("[WIFI] MAC: %02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-					DEBUG_WIFI_MULTI("[WIFI] Channel: %d\n", WiFi.channel());
-					break;
-				}
+                case 3:
+                    ip = WiFi.localIP();
+                    mac = WiFi.BSSID();
+                    DEBUG_WIFI_MULTI("[WIFI] Connecting done.\n");
+                    DEBUG_WIFI_MULTI("[WIFI] SSID: %s\n", WiFi.SSID());
+                    DEBUG_WIFI_MULTI("[WIFI] IP: %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
+                    DEBUG_WIFI_MULTI("[WIFI] MAC: %02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+                    DEBUG_WIFI_MULTI("[WIFI] Channel: %d\n", WiFi.channel());
+                    break;
                 case 1:
                     DEBUG_WIFI_MULTI("[WIFI] Connecting Failed AP not found.\n");
                     break;
@@ -245,4 +241,3 @@ void WiFiMulti::APlistClean(void)
     }
     APlist.clear();
 }
-

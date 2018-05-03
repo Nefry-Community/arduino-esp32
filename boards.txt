@@ -2,6 +2,7 @@ menu.UploadSpeed=Upload Speed
 menu.FlashFreq=Flash Frequency
 menu.FlashMode=Flash Mode
 menu.FlashSize=Flash Size
+menu.PartitionScheme=Partition Scheme
 menu.DebugLevel=Core Debug Level
 
 ##############################################################
