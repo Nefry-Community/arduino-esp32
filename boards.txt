@@ -6,7 +6,7 @@ menu.DebugLevel=Core Debug Level
 
 ##############################################################
 
-nefrybtr2.name=Nefry BT R2
+nefrybtr2.name=Nefry BT R2 / R3
 
 nefrybtr2.upload.tool=esptool
 nefrybtr2.upload.maximum_size=1703936
@@ -42,6 +42,8 @@ nefrybtr2.menu.UploadSpeed.460800.macosx=460800
 nefrybtr2.menu.UploadSpeed.460800.upload.speed=460800
 nefrybtr2.menu.UploadSpeed.512000.windows=512000
 nefrybtr2.menu.UploadSpeed.512000.upload.speed=512000
+nefrybtr2.menu.UploadSpeed.1500000=1500000
+nefrybtr2.menu.UploadSpeed.1500000.upload.speed=1500000
 
 nefrybtr2.menu.DebugLevel.none=None
 nefrybtr2.menu.DebugLevel.none.build.code_debug=0

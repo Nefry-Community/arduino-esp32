@@ -1,14 +1,20 @@
 #include <Nefry.h>
-//フルカラーLED　ランダムに色が変わります。
+#include <NefryDisplay.h>
+//フルカラーLED　順番に色が変わります。
 void setup() {
   Nefry.setProgramName("FullColorLED"); //プログラム名を管理することができます。
-  randomSeed(analogRead(A0));
 }
-int red,green,blue;
 void loop() {
-  red=random(255);                      //random関数は0-255の数値をランダムに返します。
-  green=random(255);
-  blue=random(255);
-  Nefry.setLed(red,green,blue);         //LEDがランダムに点灯します。
-  delay(1000);                          //1秒待つ
+  NefryDisplay.print("Red");
+  Nefry.setLed(255, 0, 0);       //LEDが赤色に点灯します。
+  delay(5000);                          //5秒待つ
+  NefryDisplay.print("Green");
+  Nefry.setLed(0, 255, 0);       //LEDが緑色に点灯します。
+  delay(5000);                          //5秒待つ
+  NefryDisplay.print("Blue");
+  Nefry.setLed(0, 0, 255);       //LEDが青色に点灯します。
+  delay(5000);                          //5秒待つ
+  NefryDisplay.print("OFF");
+  Nefry.setLed(0, 0, 0);         //LEDが消灯します。
+  delay(5000);                          //5秒待つ
 }

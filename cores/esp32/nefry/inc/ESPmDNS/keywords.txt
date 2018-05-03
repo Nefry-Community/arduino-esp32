@@ -1,31 +1,25 @@
 #######################################
-# Syntax Coloring Map For PubSubClient
+# Syntax Coloring Map For Ultrasound
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-NefryAzureIoTHub	KEYWORD1
-AzureIoTHub	KEYWORD1
-DataElement	KEYWORD1
-Azure		KEYWORD1
+ESPmDNS	KEYWORD1
+MDNS	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-setValue 	KEYWORD2
-getString 	KEYWORD2
-getInt		KEYWORD2
-getFloat 	KEYWORD2
-connect 	KEYWORD2
-push		KEYWORD2
-loop		KEYWORD2
-begin		KEYWORD2
-setCallback KEYWORD2
-
+begin	KEYWORD2
+end KEYWORD2
+addService	KEYWORD2
+enableArduino	KEYWORD2
+disableArduino   KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
+

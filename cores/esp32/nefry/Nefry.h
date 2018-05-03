@@ -11,6 +11,9 @@
 #include "NefryDisplay.h"
 #include "NefryWeb.h"
 #include "NefryWebServer.h"
+#include "./inc/WiFi/src/WiFiClient.h"
+#include "./inc/ESPmDNS/src/ESPmDNS.h"
+
 
 // Offset:         W          R          G          B
 #define NEO_RGB  ((0 << 6) | (0 << 4) | (1 << 2) | (2))
@@ -51,7 +54,7 @@ public:
 		/* Console */
 		read(),
 		
-		getlistWifi(),
+		getWiFiList(),
 		createHtml(String title, String head, String body);
 
 	long
@@ -65,8 +68,8 @@ public:
 	void
 		reset(),
 		sleep(const int sec),
-		setProgramName(const char * pn),
-		beginLed(const int num, const int pin, uint8_t t),
+		setProgramName(const char * pn), 
+		beginLed(const int num, const int dataOut, uint8_t t = 0, const int clk = -1),
 		setLed(const int r, const int g, const int b, const char w = 80, const int pin = 16, const int num = 0),
 		setLed(String _colorStr, const char w = 122, const int pin = 16, const int num = 0),
 		addWiFi(String ssid, String pass),
@@ -159,6 +162,8 @@ private:
 		_swPushingflg = false,
 		_wifiEnableFlg = true,/* Wi-Fiの有効無効化 */
 		_displayStatusFlg = true;/* ディスプレイの状態表示の有効無効化 */
+
+	bool setAnalyticsData(String action);
 		
 	int 
 		_bootMode = -1,	/* Boot状態を管理　-1:初期化中 0:起動中 1:通常起動 2:書き込みモード */

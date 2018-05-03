@@ -65,7 +65,7 @@ getProgramName			KEYWORD2
 getVersion			KEYWORD2
 getAddressStr			KEYWORD2
 setStoreTitle			KEYWORD2
-getlistWiFi			KEYWORD2
+getWiFiList			KEYWORD2
 createHtml			KEYWORD2
 setIndexLink		KEYWORD2
 getDisplayInfo		KEYWORD2
