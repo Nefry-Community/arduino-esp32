@@ -27,7 +27,7 @@ BootMode
 #define LIBVERSION ("1.2.2")
 #include "Nefry.h"
 
-Adafruit_NeoPixel _NefryLEDNeo;
+Adafruit_NeoPixel _NefryLED[40];
 bool connectAnFlg = false;
 //main 
 
@@ -295,19 +295,19 @@ bool Nefry_lib::getPollingSW()
 
 //LED
 void Nefry_lib::beginLed(const int num, const int DataOut, uint8_t t, const int clk) {
-	_NefryLEDNeo = Adafruit_NeoPixel(num, DataOut, t);
-	_NefryLEDNeo.begin();
-	_NefryLEDNeo.show();
+	_NefryLED[pin] = Adafruit_NeoPixel(num, DataOut, t);
+	_NefryLED[pin].begin();
+	_NefryLED[pin].show();
 }
 
 void Nefry_lib::setLed(const int r, const int g, const int b, const char w, const int pin, const int num) {
-	_NefryLEDNeo.setPixelColor(num, 0, 0, 0);
+	_NefryLED[pin].setPixelColor(num, 0, 0, 0);
 	delay(1);
-	_NefryLEDNeo.show();
-	_NefryLEDNeo.setBrightness(w);
-	_NefryLEDNeo.setPixelColor(num, map(r, 0, 255, 0, 150), g, b);
+	_NefryLED[pin].show();
+	_NefryLED[pin].setBrightness(w);
+	_NefryLED[pin].setPixelColor(num, map(r, 0, 255, 0, 150), g, b);
 	delay(1);
-	_NefryLEDNeo.show();
+	_NefryLED[pin].show();
 }
 
 void Nefry_lib::setLed(String _colorStr, const char w, const int pin, const int num) {
