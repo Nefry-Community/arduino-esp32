@@ -35,7 +35,9 @@
 #define DEBUG_ESP_PORT Serial
 
 #ifdef DEBUG_ESP_WIFI
+#ifdef DEBUG_ESP_PORT
 #define DEBUG_WIFI_MULTI(...) DEBUG_ESP_PORT.printf( __VA_ARGS__ )
+#endif
 #endif
 
 #ifndef DEBUG_WIFI_MULTI
@@ -55,7 +57,7 @@ public:
 
     bool addAP(const char* ssid, const char *passphrase = NULL);
 
-    uint8_t run(int mode = 1);
+    uint8_t run(int mode = 1,uint32_t connectTimeout=5000);
 
 private:
     std::vector<WifiAPlist_t> APlist;
