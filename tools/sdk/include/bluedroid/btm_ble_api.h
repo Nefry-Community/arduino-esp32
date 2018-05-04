@@ -852,6 +852,11 @@ typedef void (*tBLE_SCAN_PARAM_SETUP_CBACK)(tGATT_IF client_if, tBTM_STATUS stat
 
 tBTM_BLE_SCAN_SETUP_CBACK bta_ble_scan_setup_cb;
 
+typedef void (tBTM_START_ADV_CMPL_CBACK) (UINT8 status);
+typedef void (tBTM_START_STOP_ADV_CMPL_CBACK) (UINT8 status);
+
+
+
 /*****************************************************************************
 **  EXTERNAL FUNCTION DECLARATIONS
 *****************************************************************************/
@@ -943,7 +948,7 @@ tBTM_STATUS BTM_BleSetAdvParams(UINT16 adv_int_min, UINT16 adv_int_max,
 *******************************************************************************/
 tBTM_STATUS BTM_BleSetAdvParamsStartAdv(UINT16 adv_int_min, UINT16 adv_int_max, UINT8 adv_type,
                                         tBLE_ADDR_TYPE own_bda_type, tBLE_BD_ADDR *p_dir_bda,
-                                        tBTM_BLE_ADV_CHNL_MAP chnl_map, tBTM_BLE_AFP afp);
+                                        tBTM_BLE_ADV_CHNL_MAP chnl_map, tBTM_BLE_AFP afp, tBTM_START_ADV_CMPL_CBACK *adv_cb);
 
 
 /*******************************************************************************
@@ -977,7 +982,7 @@ tBTM_STATUS BTM_BleWriteAdvData(tBTM_BLE_AD_MASK  data_mask,
 tBTM_STATUS BTM_BleWriteAdvDataRaw(UINT8 *p_raw_adv, UINT32 raw_adv_len);
 
 
-BOOLEAN BTM_BleSetRandAddress(BD_ADDR rand_addr);
+tBTM_STATUS BTM_BleSetRandAddress(BD_ADDR rand_addr);
 
 
 /*******************************************************************************
@@ -1538,6 +1543,19 @@ UINT8 *BTM_CheckAdvData( UINT8 *p_adv, UINT8 type, UINT8 *p_length);
 
 /*******************************************************************************
 **
+** Function         BTM_BleGetCurrentAddress
+**
+** Description      This function is called to get local used BLE address.
+**
+** Parameters:       None.
+**
+** Returns          success or fail
+**
+*******************************************************************************/
+BOOLEAN BTM_BleGetCurrentAddress(BD_ADDR addr, uint8_t *addr_type);
+
+/*******************************************************************************
+**
 ** Function         BTM__BLEReadDiscoverability
 **
 ** Description      This function is called to read the current LE discoverability
@@ -1610,7 +1628,7 @@ BOOLEAN BTM_ReadConnectedTransportAddress(BD_ADDR remote_bda,
 **
 *******************************************************************************/
 //extern
-tBTM_STATUS BTM_BleBroadcast(BOOLEAN start);
+tBTM_STATUS BTM_BleBroadcast(BOOLEAN start, tBTM_START_STOP_ADV_CMPL_CBACK *p_stop_adv_cback);
 
 /*******************************************************************************
 **

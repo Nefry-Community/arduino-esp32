@@ -41,14 +41,17 @@ static const uint8_t A5 = 14;
 static const uint8_t A6 = 13;
 static const uint8_t A7 = 35;
 
-static const uint8_t T0 = 33;
-static const uint8_t T1 = 32;
+static const uint8_t T0 = 32;
+static const uint8_t T1 = 33;
 static const uint8_t T2 = 27;
 static const uint8_t T3 = 14;
 static const uint8_t T4 = 13;
 
 static const uint8_t DAC1 = 25;
 static const uint8_t DAC2 = 26;
+
+static const uint8_t LED_CLK = -1;
+static const uint8_t LED_DO = 16;
 
 static const uint8_t  boardId = 1;//Nefry BT
 

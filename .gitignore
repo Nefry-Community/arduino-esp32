@@ -6,3 +6,4 @@ tools/mkspiffs/mkspiffs
 tools/mkspiffs/mkspiffs.exe
 .DS_Store
 .vscode
+.vs/

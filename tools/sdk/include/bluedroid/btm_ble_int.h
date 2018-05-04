@@ -104,6 +104,7 @@ typedef UINT8   tBTM_BLE_SEC_REQ_ACT;
 #define BTM_VSC_CHIP_CAPABILITY_M_VERSION 95
 
 typedef enum {
+    BTM_BLE_IDLE,
     BTM_BLE_SCANNING,
     BTM_BLE_SCAN_PENDING,
     BTM_BLE_STOP_SCAN,
@@ -147,8 +148,10 @@ typedef struct {
     UINT16 adv_interval_max;
     tBTM_BLE_AFP afp; /* advertising filter policy */
     tBTM_BLE_SFP sfp; /* scanning filter policy */
-
+    tBTM_START_ADV_CMPL_CBACK *p_adv_cb;
+    tBTM_START_STOP_ADV_CMPL_CBACK *p_stop_adv_cb;
     tBLE_ADDR_TYPE adv_addr_type;
+    BOOLEAN adv_callback_twice;
     UINT8 evt_type;
     UINT8 adv_mode;
     tBLE_BD_ADDR direct_bda;
@@ -319,7 +322,6 @@ typedef struct {
     UINT32 scan_int;
     UINT32 scan_win;
     tBTM_BLE_SEL_CBACK *p_select_cback;
-
     /* white list information */
     UINT8 white_list_avail_size;
     tBTM_ADD_WHITELIST_CBACK *add_wl_cb;

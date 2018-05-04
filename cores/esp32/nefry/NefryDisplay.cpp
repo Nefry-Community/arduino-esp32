@@ -4,7 +4,7 @@
 
 SSD1306  _nefrySsdDisplay(0x3c, SDA2, SCL2);
 String _nefryPrintDisplay1 = "", _nefryPrintDisplay2 = "", _nefryPrintDisplay3 = "";
-
+String _dialogTitle = "Nefry PrintDialog";
 /* 初期化 */
 bool Nefry_Display::begin()
 {
@@ -19,9 +19,13 @@ bool Nefry_Display::begin()
 	return true;
 }
 
+void Nefry_Display::setTitle(String title) {
+	_dialogTitle = title;
+}
+
 void setPrintDialogDisplay() {
 	NefryDisplay.setFont(Arimo_12);
-	NefryDisplay.drawString(15, 0,"Nefry PrintDialog");
+	NefryDisplay.drawString(15, 0, _dialogTitle);
 	NefryDisplay.drawStringWithHScroll(0, 20, _nefryPrintDisplay1,10);
 	NefryDisplay.drawStringWithHScroll(0, 35, _nefryPrintDisplay2, 10);
 	NefryDisplay.drawStringWithHScroll(0, 50, _nefryPrintDisplay3, 10);

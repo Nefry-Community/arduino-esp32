@@ -8,8 +8,11 @@ class NefryThingSpeakClass:public ThingSpeakClass
 {
 public:
 	void begin(int nefryConfigChannelNumber = 0, const char* hint = "ChannelNum");
-	void setWriteAPIKey(int nefryConfigWriteApikey = 0, const char* hint = "WriteKey");
-	void setReadAPIKey(int nefryConfigReadApikey = 1, const char* hint = "ReadKey");
+	void setWriteAPIKey(int nefryConfigWriteApikey = 1, const char* hint = "WriteKey");
+	void setReadAPIKey(int nefryConfigReadApikey = 2, const char* hint = "ReadKey");
+	void begin(unsigned long  thingsChannelNum);
+	void setWriteAPIKey(String thingsWriteAPIKey);
+	void setReadAPIKey(String thingsReadAPIKey);
 	const char * getWriteAPIKey();
 	const char * getReadAPIKey();
 	unsigned long getChannelNumber();
@@ -23,7 +26,8 @@ public:
 private:
 	WiFiClient  _nefryThingClient;
 	int _nefryConfigChannelNumber, _nefryConfigWriteApikey, _nefryConfigReadApikey;
-	String _nefryWriteAPIKey, _nefryReadAPIKey;
+	unsigned long _nefryThingsChannelAPIKey = 0;
+	String _nefryThingsWriteAPIKey, _nefryThingsReadAPIKey;
 };
 extern NefryThingSpeakClass NefryThingSpeak;
 #endif

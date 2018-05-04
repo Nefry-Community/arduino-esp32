@@ -11,14 +11,14 @@ public:
 		setModuleClass(String className),
 		setUser(String user),
 		setUserPass(String pass),
-		setStoreValue(long value, const int pointer),
-		setStoreStr(String str, const int pointer),
+		setStoreValue(long value,const int pointer),
+		setStoreStr(String str,const int pointer),
 		getWriteMode(),
 		readSW(),
 		getPollingSW(),
 		getWifiEnabled(),
 		getDisplayStatusEnabled();
-
+		
 	String
 		getModuleID(),
 		getModuleClass(),
@@ -30,8 +30,8 @@ public:
 		getDefaultModuleId(),
 		/* Console */
 		read(),
-
-		getlistWifi(),
+		
+		getWiFiList(),
 		createHtml(String title, String head, String body);
 
 	long
@@ -45,9 +45,9 @@ public:
 	void
 		reset(),
 		sleep(const int sec),
-		setProgramName(const char * pn),
-		beginLed(const int num, const int pin, uint8_t t),
-		setLed(const int r, const int g, const int b, const char w = 122, const int pin = 16, const int num = 0),
+		setProgramName(const char * pn), 
+		beginLed(const int num, const int dataOut, uint8_t t = 0, const int clk = -1),
+		setLed(const int r, const int g, const int b, const char w = 80, const int pin = 16, const int num = 0),
 		setLed(String _colorStr, const char w = 122, const int pin = 16, const int num = 0),
 		addWiFi(String ssid, String pass),
 		deleteWiFi(const int id),
@@ -93,39 +93,41 @@ public:
 		println(String text),
 
 		setIndexLink(const char title[32], const char url[32]),
-		getDisplayInfo(),
+		printDeviceInfo(),
 
-		setNefryState(int state);
+		setNefryState(int state),
+		setLedBlink(int red, int green, int blue, bool EN, int wait),
+		LedBlinkTask();
 
-	ESP32WebServer* getWebServer();
+		ESP32WebServer* getWebServer();
 
-	//下位互換
+		//下位互換
 
-	String getConfStr(const int num) {
+	String getConfStr(const int num){
 		return getStoreStr(num);
 	}
-	void setConfHtmlStr(const char set[15], const int num) {
-		setStoreTitle(set, num);
+	void setConfHtmlStr(const char set[15], const int num){
+		setStoreTitle(set,num);
 	}
-	void setConfStr(const char *str, const int pt) {
-		setStoreStr(str, pt);
+	void setConfStr(const char *pt, const int num){
+		setStoreStr(pt,num);
 	}
 	void setStoreTitleStr(const char set[15], const int pt) {
 		setStoreTitle(set, pt);
 	}
-	int getConfValue(const int num) {
-		return getStoreValue(num + 10);
+	int getConfValue(const int num){
+		return getStoreValue(num+10);
 	}
-	void setConfHtmlValue(const char set[15], const int num) {
-		setStoreTitle(set, num + 10);
+	void setConfHtmlValue(const char set[15], const int num){
+		setStoreTitle(set,num+10);
 	}
-	void setConfValue(const int pt, const int num) {
-		setStoreValue(num, pt + 10);
+	void setConfValue(const int pt, const int num){
+		setStoreValue(num,pt+10);
 	}
 	void setStoreTitleValue(const char set[15], const int pt) {
-		setStoreTitle(set, pt + 10);
+		setStoreTitle(set, pt+10);
 	}
-	String getModuleName() {
+	String getModuleName(){
 		return getModuleID();
 	}
 
@@ -137,12 +139,15 @@ private:
 		_swPushingflg = false,
 		_wifiEnableFlg = true,/* Wi-Fiの有効無効化 */
 		_displayStatusFlg = true;/* ディスプレイの状態表示の有効無効化 */
+
+	bool setAnalyticsData(String action);
 		
-	int
+	int 
 		_bootMode = -1,	/* Boot状態を管理　-1:初期化中 0:起動中 1:通常起動 2:書き込みモード */
 		hextonum(char c),
-		_nefryState = 0;
-
+		_nefryState = 0,
+		_nefryWifiWait;
+	int _nefryLedBlinkState[5];
 	const char * program;
 };
 extern Nefry_lib Nefry;

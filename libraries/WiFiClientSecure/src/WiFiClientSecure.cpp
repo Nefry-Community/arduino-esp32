@@ -39,7 +39,7 @@ WiFiClientSecure::WiFiClientSecure()
     _CA_cert = NULL;
     _cert = NULL;
     _private_key = NULL;
-	next = NULL;			
+    next = NULL;
 }
 
 
@@ -58,13 +58,13 @@ WiFiClientSecure::WiFiClientSecure(int sock)
     _CA_cert = NULL;
     _cert = NULL;
     _private_key = NULL;
-    next = NULL;				
+    next = NULL;
 }
 
 WiFiClientSecure::~WiFiClientSecure()
 {
     stop();
-	delete sslclient;				  
+    delete sslclient;
 }
 
 WiFiClientSecure &WiFiClientSecure::operator=(const WiFiClientSecure &other)
@@ -103,6 +103,7 @@ int WiFiClientSecure::connect(IPAddress ip, uint16_t port, const char *_CA_cert,
 int WiFiClientSecure::connect(const char *host, uint16_t port, const char *_CA_cert, const char *_cert, const char *_private_key)
 {
     int ret = start_ssl_client(sslclient, host, port, _CA_cert, _cert, _private_key);
+    _lastError = ret;
     if (ret < 0) {
         log_e("lwip_connect_r: %d", errno);
         stop();
@@ -112,6 +113,14 @@ int WiFiClientSecure::connect(const char *host, uint16_t port, const char *_CA_c
     return 1;
 }
 
+int WiFiClientSecure::peek(){
+    if(_peek >= 0){
+        return _peek;
+    }
+    _peek = read();
+    return _peek;
+}
+
 size_t WiFiClientSecure::write(uint8_t data)
 {
     return write(&data, 1);
@@ -119,7 +128,14 @@ size_t WiFiClientSecure::write(uint8_t data)
 
 int WiFiClientSecure::read()
 {
-    uint8_t data = 0;
+    uint8_t data = -1;
+
+    if(_peek >= 0){
+        data = _peek;
+        _peek = -1;
+        return data;
+    }
+
     int res = read(&data, 1);
     if (res < 0) {
         return res;
@@ -142,6 +158,13 @@ size_t WiFiClientSecure::write(const uint8_t *buf, size_t size)
 
 int WiFiClientSecure::read(uint8_t *buf, size_t size)
 {
+    if(_peek >= 0){
+        uint8_t data = -1;
+        data = _peek;
+        _peek = -1;
+        return data;
+    }
+    
     if (!available()) {
         return -1;
     }
@@ -160,7 +183,7 @@ int WiFiClientSecure::available()
     int res = data_to_read(sslclient);
     if (res < 0 ) {
         stop();
-    }	
+    }    
     return res;
 }
 
@@ -187,3 +210,13 @@ void WiFiClientSecure::setPrivateKey (const char *private_key)
     _private_key = private_key;
 }
 
+int WiFiClientSecure::lastError(char *buf, const size_t size)
+{
+    if (!_lastError) {
+        return 0;
+    }
+    char error_buf[100];
+    mbedtls_strerror(_lastError, error_buf, 100);
+    snprintf(buf, size, "%s", error_buf);
+    return _lastError;
+}

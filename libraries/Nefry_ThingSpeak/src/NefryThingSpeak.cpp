@@ -11,6 +11,7 @@ NefryThingSpeakClass NefryThingSpeak;
 
 void NefryThingSpeakClass::begin(int nefryConfigChannelNumber, const char* hint)
 {
+	_nefryThingsChannelAPIKey = 0;
 	ThingSpeak.begin(_nefryThingClient);
 	_nefryConfigChannelNumber = nefryConfigChannelNumber;
 	Nefry.setStoreTitleValue(hint, _nefryConfigChannelNumber);
@@ -18,31 +19,55 @@ void NefryThingSpeakClass::begin(int nefryConfigChannelNumber, const char* hint)
 
 void NefryThingSpeakClass::setWriteAPIKey(int nefryConfigWriteApikey, const char* hint)
 {
+	_nefryThingsWriteAPIKey = "";
 	_nefryConfigWriteApikey = nefryConfigWriteApikey;
 	Nefry.setStoreTitleStr(hint, _nefryConfigWriteApikey);
 }
 
 void NefryThingSpeakClass::setReadAPIKey(int nefryConfigReadApikey, const char* hint)
 {
+	_nefryThingsReadAPIKey = "";
 	_nefryConfigReadApikey = nefryConfigReadApikey;
 	Nefry.setStoreTitleStr(hint, _nefryConfigReadApikey);
 }
 
+void NefryThingSpeakClass::begin(unsigned long thingsChannelNum)
+{
+	_nefryThingsChannelAPIKey = thingsChannelNum;
+}
+
+void NefryThingSpeakClass::setWriteAPIKey(String thingsWriteAPIKey)
+{
+	_nefryThingsWriteAPIKey = thingsWriteAPIKey;
+}
+
+void NefryThingSpeakClass::setReadAPIKey(String thingsReadAPIKey)
+{
+	_nefryThingsReadAPIKey = thingsReadAPIKey;
+}
+
 const char * NefryThingSpeakClass::getWriteAPIKey()
 {
-	_nefryWriteAPIKey = Nefry.getStoreStr(_nefryConfigWriteApikey);
-	return _nefryWriteAPIKey.c_str();
+	if (_nefryThingsWriteAPIKey.equals("")) {
+		_nefryThingsWriteAPIKey = Nefry.getStoreStr(_nefryConfigWriteApikey);
+	}
+	return _nefryThingsWriteAPIKey.c_str();
 }
 
 const char * NefryThingSpeakClass::getReadAPIKey()
 {
-	_nefryReadAPIKey = Nefry.getStoreStr(_nefryConfigReadApikey);
-	return _nefryReadAPIKey.c_str();
+	if (_nefryThingsReadAPIKey.equals("")) {
+		_nefryThingsReadAPIKey = Nefry.getStoreStr(_nefryConfigReadApikey);
+	}
+	return _nefryThingsReadAPIKey.c_str();
 }
 
 unsigned long NefryThingSpeakClass::getChannelNumber()
 {
-	return Nefry.getStoreValue(_nefryConfigChannelNumber);
+	if (_nefryThingsChannelAPIKey == 0) {
+		_nefryThingsChannelAPIKey = Nefry.getStoreValue(_nefryConfigChannelNumber);
+	}
+	return _nefryThingsChannelAPIKey;
 }
 
 int NefryThingSpeakClass::writeField( unsigned int field, int value)

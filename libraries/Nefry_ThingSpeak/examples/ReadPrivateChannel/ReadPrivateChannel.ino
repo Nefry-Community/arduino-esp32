@@ -5,8 +5,12 @@
  */
 void setup() {
   //初期設定
+  //DataStoreで設定するパターン
   NefryThingSpeak.begin();
   NefryThingSpeak.setReadAPIKey();
+  //直接キー情報を入力するパターン
+  //  NefryThingSpeak.begin(100);//channel番号
+  //  NefryThingSpeak.setReadAPIKey("ReadKey");//ReadKey情報を入力します
 }
 
 void loop() {

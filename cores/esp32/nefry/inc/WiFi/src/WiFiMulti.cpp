@@ -51,7 +51,7 @@ void setDisplaySSID() {
 	NefryDisplay.drawStringWithHScroll(45, 20, _nefryDisplaySsid, 3);
 	NefryDisplay.drawProgressBar(14, 44, 100, 14, 50+ wifiDisplayScroll);
 }
-uint8_t WiFiMulti::run(int mode)
+uint8_t WiFiMulti::run(int mode, uint32_t connectTimeout)
 {
     int8_t scanResult;
     uint8_t status = WiFi.status();
@@ -133,15 +133,17 @@ uint8_t WiFiMulti::run(int mode)
             if(bestNetwork.ssid) {
                 DEBUG_WIFI_MULTI("[WIFI] Connecting BSSID: %02X:%02X:%02X:%02X:%02X:%02X SSID: %s Channal: %d (%d)\n", bestBSSID[0], bestBSSID[1], bestBSSID[2], bestBSSID[3], bestBSSID[4], bestBSSID[5], bestNetwork.ssid, bestChannel, bestNetworkDb);
 
-                WiFi.begin(bestNetwork.ssid, bestNetwork.passphrase);
+                WiFi.begin(bestNetwork.ssid, bestNetwork.passphrase, bestChannel, bestBSSID);
                 status = WiFi.status();
-				
-                // wait for connection or fail
-                while(status != WL_CONNECTED && status != WL_NO_SSID_AVAIL && status != WL_CONNECT_FAILED) {
-                    delay(70);
+                
+                auto startTime = millis();
+                // wait for connection, fail, or timeout
+                while(status != WL_CONNECTED && status != WL_NO_SSID_AVAIL && status != WL_CONNECT_FAILED && (millis() - startTime) <= connectTimeout) {
+                    delay(10);
                     status = WiFi.status();
-					wifiDisplayScroll++;
-					if (wifiDisplayScroll > 50)break;
+					if ((millis() - startTime) > connectTimeout / 50 * (wifiDisplayScroll + 1)) {
+						wifiDisplayScroll++;
+					}
                 }
 				if (mode == 0) {
 					wifiDisplayScroll = 50;

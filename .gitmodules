@@ -8,3 +8,6 @@
 	path = libraries/BLE
 	url = https://github.com/nkolban/ESP32_BLE_Arduino.git
 
+[submodule "libraries/TutorialBookExample"]
+	path = libraries/TutorialBookExample
+	url = https://github.com/Nefry-Community/TutorialExample.git

@@ -47,9 +47,9 @@ typedef struct {
 } rtc_gpio_desc_t;
 
 typedef enum {
-    RTC_GPIO_MODE_INPUT_ONLY , /*!< Pad output */
-    RTC_GPIO_MODE_OUTPUT_ONLY, /*!< Pad input */
-    RTC_GPIO_MODE_INPUT_OUTUT, /*!< Pad pull output + input */
+    RTC_GPIO_MODE_INPUT_ONLY , /*!< Pad input */
+    RTC_GPIO_MODE_OUTPUT_ONLY, /*!< Pad output */
+    RTC_GPIO_MODE_INPUT_OUTPUT, /*!< Pad pull input + output */
     RTC_GPIO_MODE_DISABLED,    /*!< Pad (output + input) disable */
 } rtc_gpio_mode_t;
 
@@ -223,6 +223,24 @@ esp_err_t rtc_gpio_hold_en(gpio_num_t gpio_num);
  *     - ESP_ERR_INVALID_ARG GPIO is not an RTC IO
  */
 esp_err_t rtc_gpio_hold_dis(gpio_num_t gpio_num);
+
+/**
+ * @brief Helper function to disconnect internal circuits from an RTC IO
+ * This function disables input, output, pullup, pulldown, and enables
+ * hold feature for an RTC IO.
+ * Use this function if an RTC IO needs to be disconnected from internal
+ * circuits in deep sleep, to minimize leakage current.
+ *
+ * In particular, for ESP32-WROVER module, call
+ * rtc_gpio_isolate(GPIO_NUM_12) before entering deep sleep, to reduce
+ * deep sleep current.
+ *
+ * @param gpio_num GPIO number (e.g. GPIO_NUM_12).
+ * @return
+ *      - ESP_OK on success
+ *      - ESP_ERR_INVALID_ARG if GPIO is not an RTC IO
+ */
+esp_err_t rtc_gpio_isolate(gpio_num_t gpio_num);
 
 /**
  * @brief Disable force hold signal for all RTC IOs

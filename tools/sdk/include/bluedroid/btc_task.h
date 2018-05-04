@@ -41,6 +41,7 @@ typedef enum {
 #if (GATTC_INCLUDED == TRUE)
     BTC_PID_GATTC,
 #endif  ///GATTC_INCLUDED == TRUE
+    BTC_PID_GATT_COMMON,
     BTC_PID_GAP_BLE,
     BTC_PID_BLE_HID,
     BTC_PID_SPPLIKE,
@@ -52,6 +53,7 @@ typedef enum {
     BTC_PID_PRF_QUE,
     BTC_PID_A2DP,
     BTC_PID_AVRC,
+    BTC_PID_SPP,
 #endif  /* CONFIG_CLASSIC_BT_ENABLED */
     BTC_PID_NUM,
 } btc_pid_t; //btc profile id

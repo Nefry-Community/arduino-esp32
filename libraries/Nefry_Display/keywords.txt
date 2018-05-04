@@ -15,6 +15,7 @@ drawString			KEYWORD2
 getStringWidth		KEYWORD2
 setTextAlignment	KEYWORD2
 setFont				KEYWORD2
+setTitle			KEYWORD2
 setPixel			KEYWORD2
 drawLine			KEYWORD2
 drawRect			KEYWORD2

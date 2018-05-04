@@ -38,6 +38,7 @@ env.Prepend(
     CPPDEFINES=[
         ("ARDUINO", 10805),
         "ARDUINO_ARCH_ESP32",
+        ("ARDUINO_VARIANT", '\\"%s\\"' % env.BoardConfig().get("build.variant").replace('"', "")),
         ("ARDUINO_BOARD", '\\"%s\\"' % env.BoardConfig().get("name").replace('"', ""))
     ],
 
@@ -48,7 +49,8 @@ env.Prepend(
         "-Wno-error=unused-function",
         "-Wno-unused-parameter",
         "-Wno-sign-compare",
-        "-fstack-protector"
+        "-fstack-protector",
+        "-fexceptions"
     ],
 
     CPPPATH=[
@@ -81,15 +83,15 @@ env.Prepend(
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "vfs"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "wear_levelling"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "xtensa-debug-module"),
-        join(FRAMEWORK_DIR, "tools", "sdk", "include", "console"),
-        join(FRAMEWORK_DIR, "tools", "sdk", "include", "soc"),
-        join(FRAMEWORK_DIR, "tools", "sdk", "include", "newlib"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "coap"),
-        join(FRAMEWORK_DIR, "tools", "sdk", "include", "wpa_supplicant"),
+        join(FRAMEWORK_DIR, "tools", "sdk", "include", "console"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "expat"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "json"),
-        join(FRAMEWORK_DIR, "tools", "sdk", "include", "nghttp"),
         join(FRAMEWORK_DIR, "tools", "sdk", "include", "lwip"),
+        join(FRAMEWORK_DIR, "tools", "sdk", "include", "newlib"),
+        join(FRAMEWORK_DIR, "tools", "sdk", "include", "nghttp"),
+        join(FRAMEWORK_DIR, "tools", "sdk", "include", "soc"),
+        join(FRAMEWORK_DIR, "tools", "sdk", "include", "wpa_supplicant"),
         join(FRAMEWORK_DIR, "cores", env.BoardConfig().get("build.core"))
     ],
     LIBPATH=[
@@ -97,7 +99,7 @@ env.Prepend(
         join(FRAMEWORK_DIR, "tools", "sdk", "ld")
     ],
     LIBS=[
-        "gcc", "openssl", "btdm_app", "fatfs", "wps", "coexist", "wear_levelling", "hal", "newlib", "driver", "bootloader_support", "pp", "smartconfig", "jsmn", "wpa", "ethernet", "phy", "app_trace", "console", "ulp", "wpa_supplicant", "freertos", "bt", "micro-ecc", "cxx", "xtensa-debug-module", "mdns", "vfs", "soc", "core", "sdmmc", "coap", "tcpip_adapter", "c_nano", "rtc", "spi_flash", "wpa2", "esp32", "app_update", "nghttp", "spiffs", "espnow", "nvs_flash", "esp_adc_cal", "log", "expat", "m", "c", "heap", "mbedtls", "lwip", "net80211", "pthread", "json", "stdc++"
+        "gcc", "openssl", "btdm_app", "fatfs", "wps", "coexist", "wear_levelling", "hal", "newlib", "driver", "bootloader_support", "pp", "mesh", "smartconfig", "jsmn", "wpa", "ethernet", "phy", "app_trace", "console", "ulp", "wpa_supplicant", "freertos", "bt", "micro-ecc", "cxx", "xtensa-debug-module", "mdns", "vfs", "soc", "core", "sdmmc", "coap", "tcpip_adapter", "c_nano", "rtc", "spi_flash", "wpa2", "esp32", "app_update", "nghttp", "spiffs", "espnow", "nvs_flash", "esp_adc_cal", "log", "expat", "m", "c", "heap", "mbedtls", "lwip", "net80211", "pthread", "json", "stdc++"
     ],
 
     UPLOADERFLAGS=[
@@ -136,7 +138,7 @@ env.Append(
 
     UPLOADERFLAGS=[
         "0x1000", join(FRAMEWORK_DIR, "tools", "sdk", "bin", "bootloader_${BOARD_FLASH_MODE}_${__get_board_f_flash(__env__)}.bin"),
-        "0x8000", join("$BUILD_DIR", "partitions.bin"),
+        "0x8000", join(env.subst("$BUILD_DIR"), "partitions.bin"),
         "0xe000", join(FRAMEWORK_DIR, "tools", "partitions", "boot_app0.bin"),
         "0x10000"
     ]
@@ -174,7 +176,7 @@ libs.append(envsafe.BuildLibrary(
     join(FRAMEWORK_DIR, "cores", env.BoardConfig().get("build.core"))
 ))
 
-env.Append(LIBS=libs)
+env.Prepend(LIBS=libs)
 
 #
 # Generate partition table

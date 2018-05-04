@@ -36,16 +36,16 @@ NefryBTは適宜バージョンアップをしてArduinoIDEのボードマネー
 
 ## リンク
 
-[Facebookグループ](https://www.facebook.com/nefrystudio/) 
-[質問等についてはこちら](https://teratail.com/tags/Nefry) 
-[NefryBTドキュメント](https://dotstud.io/docs/nefrybt/) 
-[NefryBT説明書](https://drive.google.com/file/d/0B_mvDQF8yaQRLVprUHl4WTFLWVE/view) 
+- [Facebookグループ](https://www.facebook.com/nefrystudio/) 
+- [質問等についてはこちら](https://teratail.com/tags/Nefry) 
+- [NefryBTドキュメント](https://dotstud.io/docs/nefrybt/) 
+- [NefryBT説明書](https://drive.google.com/file/d/0B_mvDQF8yaQRLVprUHl4WTFLWVE/view) 
 
 ## エラーデコーダー
 
 [EspExceptionDecoder](https://github.com/me-no-dev/EspExceptionDecoder) エラーデコーダはこちらからダウンロードできます。
 
-## ESP32Dev Board PINMAP
+## NefryBT Board PINMAP
 
 ![Pin Functions](https://nefry.studio/img/nefrybt_pinmap.png)
 

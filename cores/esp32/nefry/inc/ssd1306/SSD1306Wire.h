@@ -32,6 +32,7 @@
 #include "../Wire/src/Wire.h"
 
 class SSD1306Wire : public OLEDDisplay {
+  TwoWire wireDevice = TwoWire(1);
   private:
       uint8_t             _address;
       uint8_t             _sda;
@@ -45,10 +46,10 @@ class SSD1306Wire : public OLEDDisplay {
     }
 
     bool connect() {
-      Wire.begin(this->_sda, this->_scl);
+      wireDevice.begin(this->_sda, this->_scl);
       // Let's use ~700khz if ESP8266 is in 160Mhz mode
       // this will be limited to ~400khz if the ESP8266 in 80Mhz mode.
-      Wire.setClock(700000);
+      wireDevice.setClock(700000);
       return true;
     }
 
@@ -94,13 +95,13 @@ class SSD1306Wire : public OLEDDisplay {
         for (y = minBoundY; y <= maxBoundY; y++) {
           for (x = minBoundX; x <= maxBoundX; x++) {
             if (k == 0) {
-              Wire.beginTransmission(_address);
-              Wire.write(0x40);
+              wireDevice.beginTransmission(_address);
+              wireDevice.write(0x40);
             }
-            Wire.write(buffer[x + y * DISPLAY_WIDTH]);
+            wireDevice.write(buffer[x + y * DISPLAY_WIDTH]);
             k++;
             if (k == 16)  {
-              Wire.endTransmission();
+              wireDevice.endTransmission();
               k = 0;
             }
           }
@@ -108,7 +109,7 @@ class SSD1306Wire : public OLEDDisplay {
         }
 
         if (k != 0) {
-          Wire.endTransmission();
+          wireDevice.endTransmission();
         }
       #else
 
@@ -121,24 +122,24 @@ class SSD1306Wire : public OLEDDisplay {
         sendCommand(0x7);
 
         for (uint16_t i=0; i < DISPLAY_BUFFER_SIZE; i++) {
-          Wire.beginTransmission(this->_address);
-          Wire.write(0x40);
+          wireDevice.beginTransmission(this->_address);
+          wireDevice.write(0x40);
           for (uint8_t x = 0; x < 16; x++) {
-            Wire.write(buffer[i]);
+            wireDevice.write(buffer[i]);
             i++;
           }
           i--;
-          Wire.endTransmission();
+          wireDevice.endTransmission();
         }
       #endif
     }
 
   private:
     inline void sendCommand(uint8_t command) __attribute__((always_inline)){
-      Wire.beginTransmission(_address);
-      Wire.write(0x80);
-      Wire.write(command);
-      Wire.endTransmission();
+      wireDevice.beginTransmission(_address);
+      wireDevice.write(0x80);
+      wireDevice.write(command);
+      wireDevice.endTransmission();
     }
 
 

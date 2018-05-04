@@ -100,23 +100,16 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
 
 #include "esp_log_internal.h"
 
-/**
- * @brief Log a buffer of hex bytes at specified level, seprated into 16 bytes each line.
- *
- * @param  tag      description tag
- *
- * @param  buffer   Pointer to the buffer array
- *
- * @param  buff_len length of buffer in bytes
- *
- * @param level     level of the log
- *
- */
-#define ESP_LOG_BUFFER_HEX_LEVEL( tag, buffer, buff_len, level ) do {\
-        if ( LOG_LOCAL_LEVEL >= level ) esp_log_buffer_hex_internal( tag, buffer, buff_len, level ); } while(0)
+#ifndef LOG_LOCAL_LEVEL
+#ifndef BOOTLOADER_BUILD
+#define LOG_LOCAL_LEVEL  CONFIG_LOG_DEFAULT_LEVEL
+#else
+#define LOG_LOCAL_LEVEL  CONFIG_LOG_BOOTLOADER_LEVEL
+#endif
+#endif
 
 /**
- * @brief Log a buffer of characters at specified level, seprated into 16 bytes each line. Buffer should contain only printable characters.
+ * @brief Log a buffer of hex bytes at specified level, separated into 16 bytes each line.
  *
  * @param  tag      description tag
  *
@@ -127,8 +120,31 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
  * @param level     level of the log
  *
  */
-#define ESP_LOG_BUFFER_CHAR_LEVEL( tag, buffer, buff_len, level ) do {\
-    if ( LOG_LOCAL_LEVEL >= level ) esp_log_buffer_char_internal( tag, buffer, buff_len, level ); } while(0)
+#define ESP_LOG_BUFFER_HEX_LEVEL( tag, buffer, buff_len, level ) \
+    do {\
+        if ( LOG_LOCAL_LEVEL >= (level) ) { \
+            esp_log_buffer_hex_internal( tag, buffer, buff_len, level ); \
+        } \
+    } while(0)
+
+/**
+ * @brief Log a buffer of characters at specified level, separated into 16 bytes each line. Buffer should contain only printable characters.
+ *
+ * @param  tag      description tag
+ *
+ * @param  buffer   Pointer to the buffer array
+ *
+ * @param  buff_len length of buffer in bytes
+ *
+ * @param level     level of the log
+ *
+ */
+#define ESP_LOG_BUFFER_CHAR_LEVEL( tag, buffer, buff_len, level ) \
+    do {\
+        if ( LOG_LOCAL_LEVEL >= (level) ) { \
+            esp_log_buffer_char_internal( tag, buffer, buff_len, level ); \
+        } \
+    } while(0)
 
 /**
  * @brief Dump a buffer to the log at specified level.
@@ -149,11 +165,13 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
  * 
  * @param level level of the log
  */
-#define ESP_LOG_BUFFER_HEXDUMP( tag, buffer, buff_len, level ) do {\
-    if ( LOG_LOCAL_LEVEL >= level ) esp_log_buffer_hexdump_internal( tag, buffer, buff_len, level); } while(0)
+#define ESP_LOG_BUFFER_HEXDUMP( tag, buffer, buff_len, level ) \
+    do { \
+        if ( LOG_LOCAL_LEVEL >= (level) ) { \
+            esp_log_buffer_hexdump_internal( tag, buffer, buff_len, level); \
+        } \
+    } while(0)
 
-
-#if (LOG_LOCAL_LEVEL >= ESP_LOG_INFO)
 /**
  * @brief Log a buffer of hex bytes at Info level
  *
@@ -166,7 +184,12 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
  * @see ``esp_log_buffer_hex_level``
  *
  */
-#define ESP_LOG_BUFFER_HEX(tag, buffer, buff_len)   ESP_LOG_BUFFER_HEX_LEVEL( tag, buffer, buff_len, ESP_LOG_INFO )
+#define ESP_LOG_BUFFER_HEX(tag, buffer, buff_len) \
+    do { \
+        if (LOG_LOCAL_LEVEL >= ESP_LOG_INFO) { \
+            ESP_LOG_BUFFER_HEX_LEVEL( tag, buffer, buff_len, ESP_LOG_INFO ); \
+        }\
+    } while(0)
 
 /**
  * @brief Log a buffer of characters at Info level. Buffer should contain only printable characters.
@@ -180,12 +203,13 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
  * @see ``esp_log_buffer_char_level``
  *
  */
-#define ESP_LOG_BUFFER_CHAR(tag, buffer, buff_len)   ESP_LOG_BUFFER_CHAR_LEVEL( tag, buffer, buff_len, ESP_LOG_INFO )
+#define ESP_LOG_BUFFER_CHAR(tag, buffer, buff_len) \
+    do { \
+        if (LOG_LOCAL_LEVEL >= ESP_LOG_INFO) { \
+            ESP_LOG_BUFFER_CHAR_LEVEL( tag, buffer, buff_len, ESP_LOG_INFO ); \
+        }\
+    } while(0)
 
-#else
-#define ESP_LOG_BUFFER_HEX(tag, buffer, buff_len)   {}
-#define ESP_LOG_BUFFER_CHAR(tag, buffer, buff_len)  {}
-#endif
 
 //to be back compatible
 #define esp_log_buffer_hex      ESP_LOG_BUFFER_HEX
@@ -218,14 +242,6 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
 #endif //CONFIG_LOG_COLORS
 
 #define LOG_FORMAT(letter, format)  LOG_COLOR_ ## letter #letter " (%d) %s: " format LOG_RESET_COLOR "\n"
-
-#ifndef LOG_LOCAL_LEVEL
-#ifndef BOOTLOADER_BUILD
-#define LOG_LOCAL_LEVEL  ((esp_log_level_t) CONFIG_LOG_DEFAULT_LEVEL)
-#else
-#define LOG_LOCAL_LEVEL  ((esp_log_level_t) CONFIG_LOG_BOOTLOADER_LEVEL)
-#endif
-#endif
 
 /// macro to output logs in startup code, before heap allocator and syscalls have been initialized. log at ``ESP_LOG_ERROR`` level. @see ``printf``,``ESP_LOGE``
 #define ESP_EARLY_LOGE( tag, format, ... )  if (LOG_LOCAL_LEVEL >= ESP_LOG_ERROR)   { ets_printf(LOG_FORMAT(E, format), esp_log_timestamp(), tag, ##__VA_ARGS__); }
@@ -263,7 +279,7 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
 #define ESP_LOGV( tag, format, ... )  ESP_EARLY_LOGV(tag, format, ##__VA_ARGS__)
 #endif  // BOOTLOADER_BUILD
 
-/** runtime macro to output logs at a speicfied level. 
+/** runtime macro to output logs at a specified level.
  * 
  * @param tag tag of the log, which can be used to change the log level by ``esp_log_level_set`` at runtime.
  *
@@ -282,7 +298,7 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
                 else if (level==ESP_LOG_VERBOSE )   { esp_log_write(ESP_LOG_VERBOSE,    tag, LOG_FORMAT(V, format), esp_log_timestamp(), tag, ##__VA_ARGS__); }\
                 else                                { esp_log_write(ESP_LOG_INFO,       tag, LOG_FORMAT(I, format), esp_log_timestamp(), tag, ##__VA_ARGS__); }}while(0)
 
-/** runtime macro to output logs at a speicfied level. Also check the level with ``LOG_LOCAL_LEVEL``.
+/** runtime macro to output logs at a specified level. Also check the level with ``LOG_LOCAL_LEVEL``.
  * 
  * @see ``printf``, ``ESP_LOG_LEVEL``
  */

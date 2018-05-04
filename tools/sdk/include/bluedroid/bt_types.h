@@ -276,6 +276,7 @@ typedef struct {
 /********************************************************************************
 ** Macros to get and put bytes to and from a stream (Big Endian format)
 */
+#define UINT64_TO_BE_STREAM(p, u64) {*(p)++ = (UINT8)((u64) >> 56); *(p)++ = (UINT8)((u64) >> 48); *(p)++ = (UINT8)((u64) >> 40); *(p)++ = (UINT8)((u64) >> 32); *(p)++ = (UINT8)((u64) >> 24);  *(p)++ = (UINT8)((u64) >> 16); *(p)++ = (UINT8)((u64) >> 8); *(p)++ = (UINT8)(u64); }
 #define UINT32_TO_BE_STREAM(p, u32) {*(p)++ = (UINT8)((u32) >> 24);  *(p)++ = (UINT8)((u32) >> 16); *(p)++ = (UINT8)((u32) >> 8); *(p)++ = (UINT8)(u32); }
 #define UINT24_TO_BE_STREAM(p, u24) {*(p)++ = (UINT8)((u24) >> 16); *(p)++ = (UINT8)((u24) >> 8); *(p)++ = (UINT8)(u24);}
 #define UINT16_TO_BE_STREAM(p, u16) {*(p)++ = (UINT8)((u16) >> 8); *(p)++ = (UINT8)(u16);}
@@ -498,6 +499,8 @@ typedef struct {
 #define BLE_ADDR_RANDOM         0x01
 #define BLE_ADDR_PUBLIC_ID      0x02
 #define BLE_ADDR_RANDOM_ID      0x03
+#define BLE_ADDR_TYPE_MAX       BLE_ADDR_RANDOM_ID
+#define BLE_ADDR_UNKNOWN_TYPE   0XFF
 typedef UINT8 tBLE_ADDR_TYPE;
 #define BLE_ADDR_TYPE_MASK      (BLE_ADDR_RANDOM | BLE_ADDR_PUBLIC)
 
