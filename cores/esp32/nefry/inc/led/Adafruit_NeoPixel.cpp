@@ -1543,7 +1543,7 @@ void Adafruit_NeoPixel::show(void) {
 
 
 	interrupts();
-	endTime = micros(); // Save EOD time for latch on next call
+	endTime = millis(); // Save EOD time for latch on next call
 }
 
 // Set the output pin number

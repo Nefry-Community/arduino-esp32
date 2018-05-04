@@ -146,7 +146,7 @@ public:
 	uint32_t
 		getPixelColor(uint16_t n) const;
 	inline bool
-		canShow(void) { return (micros() - endTime) >= 50L; }
+		canShow(void) { return (millis() - endTime) >= 1; }
 
 private:
 
