@@ -141,7 +141,9 @@ uint8_t WiFiMulti::run(int mode, uint32_t connectTimeout)
                 while(status != WL_CONNECTED && status != WL_NO_SSID_AVAIL && status != WL_CONNECT_FAILED && (millis() - startTime) <= connectTimeout) {
                     delay(10);
                     status = WiFi.status();
-					wifiDisplayScroll = (int)(connectTimeout / (millis() - startTime)) * 100 / 2;
+					if ((millis() - startTime) > connectTimeout / 50 * (wifiDisplayScroll + 1)) {
+						wifiDisplayScroll++;
+					}
                 }
 				if (mode == 0) {
 					wifiDisplayScroll = 50;
