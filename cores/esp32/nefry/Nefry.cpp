@@ -295,9 +295,9 @@ bool Nefry_lib::getPollingSW()
 
 //LED
 void Nefry_lib::beginLed(const int num, const int DataOut, uint8_t t, const int clk) {
-	_NefryLED[pin] = Adafruit_NeoPixel(num, DataOut, t);
-	_NefryLED[pin].begin();
-	_NefryLED[pin].show();
+	_NefryLED[DataOut] = Adafruit_NeoPixel(num, DataOut, t);
+	_NefryLED[DataOut].begin();
+	_NefryLED[DataOut].show();
 }
 
 void Nefry_lib::setLed(const int r, const int g, const int b, const char w, const int pin, const int num) {
