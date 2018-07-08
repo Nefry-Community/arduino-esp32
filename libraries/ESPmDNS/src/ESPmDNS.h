@@ -105,7 +105,12 @@ public:
   String hostname(int idx);
   IPAddress IP(int idx);
   uint16_t port(int idx);
-  
+
+  int numTxt(int idx);
+  bool hasTxt(int idx, const char * key);
+  String txt(int idx, const char * key);
+  String txt(int idx, int txtIdx);
+
 private:
   mdns_server_t * mdns;
   tcpip_adapter_if_t _if;
