@@ -200,7 +200,7 @@ int MDNSResponder::numTxt(int idx) {
         token = strtok(i == 0 ? (char*)result->txt : NULL, "&");
         i++;
     }while(token != NULL);
-    return i;
+    return i - 1;
 }
 
 bool MDNSResponder::hasTxt(int idx, const char * key) {
@@ -236,7 +236,7 @@ String MDNSResponder::txt(int idx, const char * key) {
         i++;
     }while(token != NULL);
 
-    return result->txt != NULL ? result->txt : "";
+    return "";
 }
 
 String MDNSResponder::txt(int idx, int txtIdx) {
