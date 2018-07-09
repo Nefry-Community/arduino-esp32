@@ -184,4 +184,83 @@ uint16_t MDNSResponder::port(int idx) {
     return result->port;
 }
 
+int MDNSResponder::numTxt(int idx) {
+    const mdns_result_t * result = mdns_result_get(mdns, idx);
+    if(!result){
+        log_e("Result %d not found", idx);
+        return 0;
+    }
+    if (result->txt == NULL || strcmp(result->txt, "") == 0) {
+        log_e("Result %d has no txt", idx);
+        return 0;
+    }
+    int i = 0;
+    char* token = NULL;
+    do {
+        token = strtok(i == 0 ? (char*)result->txt : NULL, "&");
+        i++;
+    }while(token != NULL);
+    return i - 1;
+}
+
+bool MDNSResponder::hasTxt(int idx, const char * key) {
+    const mdns_result_t * result = mdns_result_get(mdns, idx);
+    if(!result){
+        log_e("Result %d not found", idx);
+        return false;
+    }
+    return result->txt != NULL && strcmp(result->txt, "") != 0;
+}
+
+String MDNSResponder::txt(int idx, const char * key) {
+    const mdns_result_t * result = mdns_result_get(mdns, idx);
+    if(!result){
+        log_e("Result %d not found", idx);
+        return "";
+    }
+    if (result->txt == NULL || strcmp(result->txt, "") == 0) {
+        log_e("Result %d has no txt", idx);
+        return "";
+    }
+    int i = 0;
+    char* token = NULL;
+    do {
+        token = strtok(i == 0 ? (char*)result->txt : NULL, "&");
+        int j = 0;
+        while (token[j] == key[j]) {
+            j++;
+        }
+        if (token[j] == '=' && key[j] == '\0') {
+            return token+j+1;
+        }
+        i++;
+    }while(token != NULL);
+
+    return "";
+}
+
+String MDNSResponder::txt(int idx, int txtIdx) {
+    const mdns_result_t * result = mdns_result_get(mdns, idx);
+    if(!result){
+        log_e("Result %d not found", idx);
+        return "";
+    }
+    if (result->txt == NULL || strcmp(result->txt, "") == 0) {
+        log_e("Result %d has no txt", idx);
+        return "";
+    }
+    int i = 0;
+    char* token = NULL;
+    do {
+        token = strtok(i == 0 ? (char*)result->txt : NULL, "&");
+        if (i == idx) {
+            char* key = strtok(token, "=");
+            char* value = strtok(NULL, "=");
+            return value;
+        }
+        i++;
+    }while(token != NULL);
+    return "";
+}
+
 MDNSResponder MDNS;
