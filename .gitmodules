@@ -11,3 +11,6 @@
 [submodule "libraries/TutorialBookExample"]
 	path = libraries/TutorialBookExample
 	url = https://github.com/Nefry-Community/TutorialExample.git
+[submodule "libraries/AzureIoT"]
+	path = libraries/AzureIoT
+	url = https://github.com/VSChina/ESP32_AzureIoT_Arduino
