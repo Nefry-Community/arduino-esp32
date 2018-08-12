@@ -2,8 +2,7 @@
 #include <lwip/def.h>
 #include <Arduino.h>
 
-//#define DEBUG
-//#define DEBUG_OUTPUT Serial
+
 DNSServer::DNSServer()
 {
   _ttl = htonl(DNS_DEFAULT_TTL);
@@ -185,21 +184,6 @@ void DNSServer::replyWithIP()
   _udp.write((unsigned char*) &answerIPv4, 2 );
   _udp.write(_resolvedIP, sizeof(_resolvedIP)); // The IP address to return
   _udp.endPacket();
-
-
-
-  #ifdef DEBUG
-    DEBUG_OUTPUT.print("DNS responds: ");
-    DEBUG_OUTPUT.print(_resolvedIP[0]);
-    DEBUG_OUTPUT.print(".");
-    DEBUG_OUTPUT.print(_resolvedIP[1]);
-    DEBUG_OUTPUT.print(".");
-    DEBUG_OUTPUT.print(_resolvedIP[2]);
-    DEBUG_OUTPUT.print(".");
-    DEBUG_OUTPUT.print(_resolvedIP[3]);
-    DEBUG_OUTPUT.print(" for ");
-    DEBUG_OUTPUT.println(getDomainNameWithoutWwwPrefix());
-  #endif
 }
 
 void DNSServer::replyWithCustomCode()

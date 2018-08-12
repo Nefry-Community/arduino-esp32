@@ -197,34 +197,34 @@ bool WiFiMulti::APlistAdd(const char* ssid, const char *passphrase)
 
     if(!ssid || *ssid == 0x00 || strlen(ssid) > 31) {
         // fail SSID to long or missing!
-        DEBUG_WIFI_MULTI("[WIFI][APlistAdd] no ssid or ssid to long\n");
+        log_e("[WIFI][APlistAdd] no ssid or ssid to long");
         return false;
     }
 
     if(passphrase && strlen(passphrase) > 63) {
         // fail passphrase to long!
-        DEBUG_WIFI_MULTI("[WIFI][APlistAdd] passphrase to long\n");
+        log_e("[WIFI][APlistAdd] passphrase to long");
         return false;
     }
 
     newAP.ssid = strdup(ssid);
 
     if(!newAP.ssid) {
-        DEBUG_WIFI_MULTI("[WIFI][APlistAdd] fail newAP.ssid == 0\n");
+        log_e("[WIFI][APlistAdd] fail newAP.ssid == 0");
         return false;
     }
 
     if(passphrase && *passphrase != 0x00) {
         newAP.passphrase = strdup(passphrase);
         if(!newAP.passphrase) {
-            DEBUG_WIFI_MULTI("[WIFI][APlistAdd] fail newAP.passphrase == 0\n");
+            log_e("[WIFI][APlistAdd] fail newAP.passphrase == 0");
             free(newAP.ssid);
             return false;
         }
     }
 
     APlist.push_back(newAP);
-    DEBUG_WIFI_MULTI("[WIFI][APlistAdd] add SSID: %s\n", newAP.ssid);
+    log_i("[WIFI][APlistAdd] add SSID: %s", newAP.ssid);
     return true;
 }
 
@@ -241,4 +241,3 @@ void WiFiMulti::APlistClean(void)
     }
     APlist.clear();
 }
-
