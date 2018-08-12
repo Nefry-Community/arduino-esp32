@@ -14,3 +14,6 @@
 [submodule "libraries/AzureIoT"]
 	path = libraries/AzureIoT
 	url = https://github.com/VSChina/ESP32_AzureIoT_Arduino
+[submodule "libraries/GoogleHomeNotifier"]
+	path = libraries/GoogleHomeNotifier
+	url = https://github.com/horihiro/esp8266-google-home-notifier.git
