@@ -123,8 +123,6 @@ uint8_t WiFiMulti::run(int mode, uint32_t connectTimeout)
 				//NefryDisplay.drawProgressBar(14, 44, 100, 14, 50);
 				//NefryDisplay.display();
 			}
-            DEBUG_WIFI_MULTI("\n\n");
-            delay(0);
 
             if(bestNetwork.ssid) {
                 log_i("[WIFI] Connecting BSSID: %02X:%02X:%02X:%02X:%02X:%02X SSID: %s Channal: %d (%d)", bestBSSID[0], bestBSSID[1], bestBSSID[2], bestBSSID[3], bestBSSID[4], bestBSSID[5], bestNetwork.ssid, bestChannel, bestNetworkDb);
