@@ -19,8 +19,8 @@ static const uint8_t KEY_BUILTIN = 0;
 static const uint8_t TX = 1;
 static const uint8_t RX = 3;
 
-static const uint8_t SDA = 21;
-static const uint8_t SCL = 22;
+static const uint8_t SDA = 4;
+static const uint8_t SCL = 15;
 
 static const uint8_t SS    = 18;
 static const uint8_t MOSI  = 27;
@@ -55,10 +55,23 @@ static const uint8_t T4 = 13;
 static const uint8_t T5 = 12;
 static const uint8_t T6 = 14;
 static const uint8_t T7 = 27;
-static const uint8_t T8 = 32;
-static const uint8_t T9 = 33;
+static const uint8_t T8 = 33;
+static const uint8_t T9 = 32;
 
-static const uint8_t DAC1 = 26;
-static const uint8_t DAC2 = 25;
+static const uint8_t DAC1 = 25;
+static const uint8_t DAC2 = 26;
+
+// OLed
+static const uint8_t OLED_SCL = 15;
+static const uint8_t OLED_SDA = 4;
+static const uint8_t OLED_RST = 16;
+
+// LoRA
+static const uint8_t LORA_SCK = 5;
+static const uint8_t LORA_MOSI = 27;
+static const uint8_t LORA_MISO = 19;
+static const uint8_t LORA_CS = 18;
+static const uint8_t LORA_RST = 14;
+static const uint8_t LORA_IRQ = 26;
 
 #endif /* Pins_Arduino_h */
